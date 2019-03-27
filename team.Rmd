@@ -1,0 +1,77 @@
+---
+title: "team"
+author: "Allegra Frickel"
+date: "3/27/2019"
+output: html_document
+---
+
+```{r}
+library(readxl)
+defense <- read_excel('cyclonesFootball2018.xlsx', sheet='Defensive')
+str(defense)
+```
+
+```{r}
+offense <- read_excel('cyclonesFootball2018.xlsx', sheet='Offensive')
+str(offense)
+```
+
+```{r}
+bio <- read_excel('cyclonesFootball2018.xlsx', sheet='Biography')
+str(bio)
+```
+
+```{r}
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+**Part One: Cleaning**
+
+1. Player names and opponent names are factors
+
+2. Offensive and defensive names statistics are numerical
+
+3. Change height to numeric
+
+**Part Two: Tidying (1)**
+
+1. Reformat defClean into a tidy format using gather. The type of statistic is added as a new key column names Statistic.
+
+2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
+
+3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
+
+```{r}
+#plt <- ggplot(defClean, aes(x= `West Virginia`, y=`Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+#plt
+```
+
+Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
+
+Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
+
+**Part Two: Tidying (2)**
+
+1. Separate the Hometown column into two columns, name the city and the state. Print the first few rows of these two columns.
+
+```{r}
+#bioClean %>% separate(Hometown, into = c("City", "State"))
+```
+
+2. How many players are there from each state?
+
+```{r}
+#table(bioClean$State)
+```
+
+**Part Three: Joining data frames**
+
+1. Find where the offensive players come from by joining the offensive data and player biography data appropriately.
+
+2. Is there a relationship between the weight of the player and the receiving yards (Receiving_YDS)?
+
+3. Is there a relationship between weight and solo tackles?
+
+
