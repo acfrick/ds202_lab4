@@ -1,0 +1,83 @@
+---
+title: "individual2"
+author: "Audrey Comer"
+date: "3/26/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(readxl)
+defense <- read_excel('cyclonesFootball2018.xlsx', sheet='Defensive')
+offense <- read_excel('cyclonesFootball2018.xlsx', sheet='Offensive')
+bio <- read_excel('cyclonesFootball2018.xlsx', sheet='Biography')
+```
+
+1a. Make the player names and opponent names factors.
+```{r}
+library(dplyr)
+defense$Name <- as.factor(defense$Name)
+defense$Opponent_Opponent <- as.factor(defense$Opponent_Opponent)
+offense$Name <- as.factor(offense$Name)
+offense$Opponent_Opponent <- as.factor(offense$Opponent_Opponent)
+bio$Name <- as.factor(bio$Name)
+```
+
+
+1b. Make all defensive and offensive statistics numerical. The Weight column in biography should also be numeric. 
+```{r}
+defense <- defense %>% mutate_if(is.character,as.numeric)
+offense <- offense %>% mutate_if(is.character,as.numeric)
+bio$Weight <- as.numeric(bio$Weight)
+```
+
+1c. Bonus: change the Height column in biography to numeric. (Hint: use a unit that works well)
+
+1d. Print the structures of the Clean dataframes.
+```{r}
+defClean <- defense
+offClean <- offense
+bioClean <- bio
+str(defClean)
+str(offClean)
+str(bioClean)
+```
+
+#Part 2: Tidying
+1. Reformat the defClean data frame into a tidy format using gather. The type of statistic (Tackles_Solo, Tackles_ASST, etc) is added as a new key column named Statistic.
+[I have no idea what this means]
+```{r}
+library(tidyr)
+defClean %>% 
+ gather(key = Statistic)
+
+  
+```
+
+2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
+```{r}
+library(ggplot2)
+ggplot(defClean, aes(x=Statistic)) + geom_histogram()
+```
+
+
+3. Did ISU have better defense against West Virginia or Kansas State? Answer this question by creating a scatterplot with x-axis being the number of solo tackles (by each player) against West Virginia, and y-axis being that against Kansas State. A large number of solo tackles indicates good defense.
+
+
+###Now turn our attention to the player biography.
+
+1. Separate the Hometown column into two columns, namely the city and the state. Print the first few rows of these two columns. (Hint: look at the sep= argument of separate)
+
+2. How many players are there from each state?
+
+
+
+#Part 3: Joining data frames
+1. Find where do the offensive players come from by joining the offensive data and player biography data appropriately.
+
+2. Is there a relationship between the weight of a player and the receiving yards (Receiving_YDS)?
+
+3. Explore more. Raise a question that can be answered only by looking at two or more data frames. Then answer that question.
