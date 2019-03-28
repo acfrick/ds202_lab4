@@ -35,6 +35,7 @@ bio$Name <- as.factor(bio$Name)
 
 2. Offensive and defensive names statistics are numerical
 ```{r}
+library(dplyr)
 defense <- defense %>% mutate_if(is.character,as.numeric)
 offense <- offense %>% mutate_if(is.character,as.numeric)
 bio$Weight <- as.numeric(bio$Weight)
@@ -71,22 +72,17 @@ defClean
 
 ```{r}
 library(ggplot2)
-ggplot(defClean, aes(x=Tackles_Solo)) + geom_histogram() + facet_wrap(~Statistic)
+ggplot(defClean, aes(x=Count)) + geom_histogram() + facet_wrap(~Statistic)
 ```
 
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
 ```{r}
-plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
-plt
+#plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+#plt
 
 #this line of code ran, but a scatterplort did not display. An error message saying West Virginia was not found.
 ```
-
-```{r}
-var1 <- defClean %>% filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State') %>% select(Name, Opponent_Opponent, Tackles_Solo) %>% group_by(Name)
-```
-
 
 Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
 
