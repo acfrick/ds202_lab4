@@ -79,13 +79,11 @@ Based on the histrograms above, Turnover_FR and Turnover_INT skills are rare.
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
 ```{r}
-plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+plt <- ggplot(defClean, aes(x= Opponent_Opponent == 'West Virginia', y= Opponent_Opponent == 'Kansas State')) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
 plt
-
-#this line of code ran, but a scatterplort did not display. An error message saying West Virginia was not found.
 ```
 
-Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
+From this scatterplot, we can see Iowa State had the same defense playing West Virginia when playing Kansas State.
 
 **Part Two: Tidying (2)**
 
