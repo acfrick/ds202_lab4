@@ -30,12 +30,39 @@ library(ggplot2)
 **Part One: Cleaning**
 
 1. Player names and opponent names are factors
+```{r}
+library(dplyr)
+defense$Name <- as.factor(defense$Name)
+defense$Opponent_Opponent <- as.factor(defense$Opponent_Opponent)
+offense$Name <- as.factor(offense$Name)
+offense$Opponent_Opponent <- as.factor(offense$Opponent_Opponent)
+bio$Name <- as.factor(bio$Name)
+```
 
 2. Offensive and defensive names statistics are numerical
+```{r}
+defense <- defense %>% mutate_if(is.character,as.numeric)
+offense <- offense %>% mutate_if(is.character,as.numeric)
+bio$Weight <- as.numeric(bio$Weight)
+```
 
 3. Change height to numeric
+```{r}
 
-**Part Two: Tidying (1)**
+```
+
+1d. Print the structures of the Clean dataframes.
+```{r}
+defClean <- defense
+offClean <- offense
+bioClean <- bio
+str(defClean)
+str(offClean)
+str(bioClean)
+```
+
+
+##**Part Two: Tidying (1)**
 
 1. Reformat defClean into a tidy format using gather. The type of statistic is added as a new key column names Statistic.
 
