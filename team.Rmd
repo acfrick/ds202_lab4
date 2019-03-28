@@ -47,7 +47,7 @@ bio$Weight <- as.numeric(bio$Weight)
 
 3. Change height to numeric
 ```{r}
-
+bio %>% mutate(as.numeric(Height))
 ```
 
 Print the structures of the Clean dataframes.
@@ -60,17 +60,17 @@ str(offClean)
 str(bioClean)
 ```
 
-
 ##**Part Two: Tidying (1)**
 
 1. Reformat defClean into a tidy format using gather. The type of statistic is added as a new key column names Statistic.
 
 ```{r}
-library(tidyverse)
 defClean %>% gather(key = Statistic, value = Count, 3:11)
 ```
 
 2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
+
+(What Audrey tried)
 ```{r}
 #this is completely and totally incorrect
 ggplot(gather(defClean), aes(x=value)) + 
@@ -78,6 +78,10 @@ ggplot(gather(defClean), aes(x=value)) +
     facet_wrap(~key)
 ```
 
+(What Ally tried)
+```{r}
+ggplot(defClean, aes(x=Count)) + geom_histogram() + facet_wrap(~Statistic)
+```
 
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
@@ -93,19 +97,18 @@ var1 <- defClean %>% group_by(Name) %>%
 
 (what Ally tried)
 ```{r}
-plt <- ggplot(defClean, aes(x= 'West Virginia', y='Kansas State')) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
 plt
 ```
 
 Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
-
 
 **Part Two: Tidying (2)**
 
 1. Separate the Hometown column into two columns, name the city and the state. Print the first few rows of these two columns.
 
 ```{r}
-bioClean %>% separate(Hometown, into = c("City", "State"))
+bioClean <- bioClean %>% separate(Hometown, into = c("City", "State"), sep = ",")
 ```
 
 2. How many players are there from each state?
