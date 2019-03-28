@@ -44,7 +44,6 @@ bio$Weight <- as.numeric(bio$Weight)
 
 3. Change height to numeric
 ```{r}
-library(dplyr)
 bio %>% mutate(as.numeric(Height))
 ```
 
@@ -90,7 +89,6 @@ Iowa State had a better defense against West Virginia/Kansas State. We can tell 
 
 1. Separate the Hometown column into two columns, name the city and the state. Print the first few rows of these two columns.
 ```{r}
-library(tidyverse)
 bioClean <- bioClean %>% separate(Hometown, into = c("City", "State"), sep = ",")
 ```
 
