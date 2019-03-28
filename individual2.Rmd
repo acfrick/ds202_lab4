@@ -76,8 +76,9 @@ df3 %>% filter(Count != 0) %>% group_by(Name)
 vec<-df3$Count
 length(vec)
 #I was trying to make a vector to then convert it to coordinate pairs but not all players played both games
-ggplot(defClean, aes(x=if(Opponent_Opponent=='West Virginia',Count),y=if(Opponent_Opponent=='Kansas State',Count))
-plt <- ggplot(defClean, aes(x= Opponent_Opponent == 'West Virginia', y= Opponent_Opponent == 'Kansas State', by=Name)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State') 
+
+#ggplot(defClean, aes(x=if(Opponent_Opponent=='West Virginia',Count),y=if(Opponent_Opponent=='Kansas State',Count))
+#plt <- ggplot(defClean, aes(x= Opponent_Opponent == 'West Virginia', y= Opponent_Opponent == 'Kansas State', by=Name)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State') 
 plt
 ```
 
