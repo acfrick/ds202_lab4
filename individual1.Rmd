@@ -109,9 +109,25 @@ anti_join(bioClean, offClean, by = "Name")
 2. Is there a relationship between the weight of the player and the receiving yards (Receiving_YDS)?
 
 ```{r}
-##anti_join(offClean, bioClean, by = "Weight", "Receiving_YDS")
+df <- inner_join(bioClean, offClean, by = "Name")
 ```
 
+```{r}
+ggplot(df, aes(x=Weight, y=Receiving_YDS)) + geom_point()
+```
+
+There may not be a relationship between receiving yards and weight, but this graph displays that those who are 225 pounds had the most receiving yards.
+
 3. Is there a relationship between weight and solo tackles?
+
+```{r}
+df1 <- inner_join(bioClean, defClean, by = "Name")
+```
+
+```{r}
+#ggplot(df1, aes(x=Weight, y=Tackles_Solo)) + geom_point()
+```
+
+This graph displays some left skewness between weight and solo tackles. The graph displays that those weighing less weight have more solo tackles.
 
 
