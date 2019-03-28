@@ -65,43 +65,26 @@ str(bioClean)
 1. Reformat defClean into a tidy format using gather. The type of statistic is added as a new key column names Statistic.
 
 ```{r}
-defClean %>% gather(key = Statistic, value = Count, 3:11)
+defClean <- defClean %>% gather(key = Statistic, value = Count, 3:11)
 ```
 
 2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
 
-(What Audrey tried)
 ```{r}
-#this is completely and totally incorrect
-ggplot(gather(defClean), aes(x=value)) + 
-    geom_bar() + 
-    facet_wrap(~key)
+ggplot(defClean, aes(x=Count)) + geom_histogram(binwidth = 1) + facet_wrap(~Statistic)
 ```
 
-(What Ally tried)
-```{r}
-ggplot(defClean, aes(x=Count)) + geom_histogram() + facet_wrap(~Statistic)
-```
+Based on the histrograms above, Turnover_FR (fumble recovery) and Turnover_INT (turnover interception) skills are rare.
 
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
-(What Audrey tried) .. 
 ```{r}
-var1 <- defClean %>% group_by(Name) %>%
-  filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State') %>%
-  select(Name, Opponent_Opponent, Tackles_Solo)
-
-#ggplot(var1, aes(x=Opponent_Opponent, y=Tackles_Solo)) +geom_point()
-
-```
-
-(what Ally tried)
-```{r}
+defClean %>% group_by(Opponent_Opponent) %>% filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State')
 plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
-plt
+#this line of code ran, but a scatterplort did not display. An error message saying West Virginia was not found.
 ```
 
-Iowa State had a better defense against West Virginia/Kansas State. We can tell because ____ has a large number of solo tackles of ___, which was during the West Virgina/Kansas State game.
+Iowa State had a better defense against West Virginia/Kansas State. We can tell because Iowa State has higher plot points indicating a better defense against ___.
 
 **Part Two: Tidying (2)**
 
@@ -109,6 +92,7 @@ Iowa State had a better defense against West Virginia/Kansas State. We can tell 
 
 ```{r}
 bioClean <- bioClean %>% separate(Hometown, into = c("City", "State"), sep = ",")
+head(bioClean)
 ```
 
 2. How many players are there from each state?
