@@ -71,11 +71,29 @@ defClean %>% gather(key = Statistic, value = Count, 3:11)
 ```
 
 2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
+```{r}
+#this is completely and totally incorrect
+ggplot(gather(defClean), aes(x=value)) + 
+    geom_bar() + 
+    facet_wrap(~key)
+```
+
 
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
+(What Audrey tried)
 ```{r}
-plt <- ggplot(defClean, aes(x= `West Virginia`, y=`Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+var1 <- defClean %>% group_by(Name) %>%
+  filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State') %>%
+  select(Name, Opponent_Opponent, Tackles_Solo)
+
+#ggplot(var1, aes(x=Opponent_Opponent, y=Tackles_Solo)) +geom_point()
+
+```
+
+(what Ally tried)
+```{r}
+plt <- ggplot(defClean, aes(x= 'West Virginia', y='Kansas State')) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
 plt
 ```
 
