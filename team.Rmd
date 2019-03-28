@@ -89,9 +89,13 @@ Based on the histrograms above, Turnover_FR (fumble recovery) and Turnover_INT (
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
 ```{r}
-defClean %>% group_by(Opponent_Opponent) %>% filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State')
-plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
-#this line of code ran, but a scatterplort did not display. An error message saying West Virginia was not found.
+df3<-defClean %>% group_by(Opponent_Opponent) %>% filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State') %>% filter(Statistic=='Tackles_Solo')
+df3 %>% filter(Count != 0) %>% group_by(Name)
+vec<-df3$Count
+length(vec)
+ggplot(defClean, aes(x=if(Opponent_Opponent=='West Virginia',Count),y=if(Opponent_Opponent=='Kansas State',Count))
+plt <- ggplot(defClean, aes(x= Opponent_Opponent == 'West Virginia', y= Opponent_Opponent == 'Kansas State', by=Name)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+plt
 ```
 
 Iowa State had a better defense against West Virginia/Kansas State. We can tell because Iowa State has higher plot points indicating a better defense against ___.
