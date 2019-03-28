@@ -71,14 +71,16 @@ defClean
 
 ```{r}
 library(ggplot2)
-ggplot(defClean, aes(x=Count)) + geom_histogram() + facet_wrap(~Statistic)
+ggplot(defClean, aes(x=Count)) + geom_histogram(binwidth = 1) + facet_wrap(~Statistic)
 ```
+
+Based on the histrograms above, Turnover_FR and Turnover_INT skills are rare.
 
 3. Did ISU have better defense against West Virginia or KState? Create a scatterplot with the x-axis being the number of solo tackles against West Virginia. The y-axis should be against KState. A large number of solo tackles indicates a good defense.
 
 ```{r}
-#plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
-#plt
+plt <- ggplot(defClean, aes(x= Opponent_Opponent == `West Virginia`, y= Opponent_Opponent == `Kansas State`)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State')
+plt
 
 #this line of code ran, but a scatterplort did not display. An error message saying West Virginia was not found.
 ```
@@ -90,6 +92,7 @@ Iowa State had a better defense against West Virginia/Kansas State. We can tell 
 1. Separate the Hometown column into two columns, name the city and the state. Print the first few rows of these two columns.
 ```{r}
 bioClean <- bioClean %>% separate(Hometown, into = c("City", "State"), sep = ",")
+head(bioClean)
 ```
 
 2. How many players are there from each state?
@@ -112,19 +115,5 @@ anti_join(bioClean, offClean, by = "Name")
 ```
 
 3. Is there a relationship between weight and solo tackles?
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
