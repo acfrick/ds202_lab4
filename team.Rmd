@@ -60,7 +60,7 @@ str(offClean)
 str(bioClean)
 ```
 
-##**Part Two: Tidying (1)**
+**Part Two: Tidying (1)**
 
 1. Reformat defClean into a tidy format using gather. The type of statistic is added as a new key column names Statistic.
 
