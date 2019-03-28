@@ -35,7 +35,16 @@ bio$Weight <- as.numeric(bio$Weight)
 ```
 
 1c. Bonus: change the Height column in biography to numeric. (Hint: use a unit that works well)
+```{r}
+bio <- bio %>% separate(Height, into = c("Feet", "Inches"), sep = "-")
+```
 
+```{r}
+bio$Feet <- as.numeric(bio$Feet)
+bio$Inches <- as.numeric(bio$Inches)
+bio <- bio %>% mutate(HeightDec = Feet + Inches/12)
+#would like to move HeightDec column after inches column
+```
 1d. Print the structures of the Clean dataframes.
 ```{r}
 defClean <- defense
@@ -48,36 +57,49 @@ str(bioClean)
 
 #Part 2: Tidying
 1. Reformat the defClean data frame into a tidy format using gather. The type of statistic (Tackles_Solo, Tackles_ASST, etc) is added as a new key column named Statistic.
-[I have no idea what this means]
-```{r}
-library(tidyr)
-defClean %>% 
- gather(key = Statistic)
 
-  
+```{r}
+defClean <- defClean %>% gather(key = Statistic, value = Count, 3:11)
 ```
 
 2. Create a histogram for each defensive statistic. Use facet_wrap to draw all histograms in a single plot. What defensive skills are rare?
+
 ```{r}
-library(ggplot2)
-ggplot(defClean, aes(x=Statistic)) + geom_histogram()
+ggplot(defClean, aes(x=Count)) + geom_histogram(binwidth = 1) + facet_wrap(~Statistic)
 ```
 
 
 3. Did ISU have better defense against West Virginia or Kansas State? Answer this question by creating a scatterplot with x-axis being the number of solo tackles (by each player) against West Virginia, and y-axis being that against Kansas State. A large number of solo tackles indicates good defense.
+```{r}
+df3<-defClean %>% group_by(Opponent_Opponent) %>% filter(Opponent_Opponent == 'West Virginia' | Opponent_Opponent =='Kansas State') %>% filter(Statistic=='Tackles_Solo')
+df3 %>% filter(Count != 0) %>% group_by(Name)
+vec<-df3$Count
+length(vec)
+#I was trying to make a vector to then convert it to coordinate pairs but not all players played both games
+ggplot(defClean, aes(x=if(Opponent_Opponent=='West Virginia',Count),y=if(Opponent_Opponent=='Kansas State',Count))
+plt <- ggplot(defClean, aes(x= Opponent_Opponent == 'West Virginia', y= Opponent_Opponent == 'Kansas State', by=Name)) + geom_point() + xlab('Solo tackles against West Virgina') + ylab('Solo tackles against Kansas State') 
+plt
+```
 
 
 ###Now turn our attention to the player biography.
 
 1. Separate the Hometown column into two columns, namely the city and the state. Print the first few rows of these two columns. (Hint: look at the sep= argument of separate)
-
+```{r}
+bioClean <- bioClean %>% separate(Hometown, into = c("City", "State"), sep = ",")
+head(bioClean)
+```
 2. How many players are there from each state?
-
+```{r}
+table(bioClean$State)
+```
 
 
 #Part 3: Joining data frames
 1. Find where do the offensive players come from by joining the offensive data and player biography data appropriately.
-
+```{r}
+anti_join(bioClean, offClean, by = "Name")
+```
 2. Is there a relationship between the weight of a player and the receiving yards (Receiving_YDS)?
 
 3. Explore more. Raise a question that can be answered only by looking at two or more data frames. Then answer that question.
